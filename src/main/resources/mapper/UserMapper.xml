@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itclj.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.itclj.model.User">
+    <id column="uId" jdbcType="INTEGER" property="uid" />
+    <result column="uName" jdbcType="VARCHAR" property="uname" />
+    <result column="uPassword" jdbcType="VARCHAR" property="upassword" />
+    <result column="uPersoname" jdbcType="VARCHAR" property="upersoname" />
+    <result column="uNum" jdbcType="VARCHAR" property="unum" />
+    <result column="uRole" jdbcType="CHAR" property="urole" />
+    <result column="uIsDel" jdbcType="CHAR" property="uisdel" />
+    <result column="uCTime" jdbcType="TIMESTAMP" property="uctime" />
+    <result column="uIsAdmin" jdbcType="VARCHAR" property="uisadmin" />
+    <result column="ri" jdbcType="DATE" property="ri" />
+    <result column="ri2" jdbcType="TIMESTAMP" property="ri2" />
+    <result column="ri3" jdbcType="TIMESTAMP" property="ri3" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uId, uName, uPassword, uPersoname, uNum, uRole, uIsDel, uCTime, uIsAdmin, ri, ri2, 
+    ri3
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tuser
+    where uId = #{uid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tuser
+    where uId = #{uid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itclj.model.User">
+    insert into tuser (uId, uName, uPassword, 
+      uPersoname, uNum, uRole, 
+      uIsDel, uCTime, uIsAdmin, 
+      ri, ri2, ri3)
+    values (#{uid,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR}, #{upassword,jdbcType=VARCHAR}, 
+      #{upersoname,jdbcType=VARCHAR}, #{unum,jdbcType=VARCHAR}, #{urole,jdbcType=CHAR}, 
+      #{uisdel,jdbcType=CHAR}, #{uctime,jdbcType=TIMESTAMP}, #{uisadmin,jdbcType=VARCHAR}, 
+      #{ri,jdbcType=DATE}, #{ri2,jdbcType=TIMESTAMP}, #{ri3,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itclj.model.User">
+    insert into tuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uId,
+      </if>
+      <if test="uname != null">
+        uName,
+      </if>
+      <if test="upassword != null">
+        uPassword,
+      </if>
+      <if test="upersoname != null">
+        uPersoname,
+      </if>
+      <if test="unum != null">
+        uNum,
+      </if>
+      <if test="urole != null">
+        uRole,
+      </if>
+      <if test="uisdel != null">
+        uIsDel,
+      </if>
+      <if test="uctime != null">
+        uCTime,
+      </if>
+      <if test="uisadmin != null">
+        uIsAdmin,
+      </if>
+      <if test="ri != null">
+        ri,
+      </if>
+      <if test="ri2 != null">
+        ri2,
+      </if>
+      <if test="ri3 != null">
+        ri3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="upassword != null">
+        #{upassword,jdbcType=VARCHAR},
+      </if>
+      <if test="upersoname != null">
+        #{upersoname,jdbcType=VARCHAR},
+      </if>
+      <if test="unum != null">
+        #{unum,jdbcType=VARCHAR},
+      </if>
+      <if test="urole != null">
+        #{urole,jdbcType=CHAR},
+      </if>
+      <if test="uisdel != null">
+        #{uisdel,jdbcType=CHAR},
+      </if>
+      <if test="uctime != null">
+        #{uctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uisadmin != null">
+        #{uisadmin,jdbcType=VARCHAR},
+      </if>
+      <if test="ri != null">
+        #{ri,jdbcType=DATE},
+      </if>
+      <if test="ri2 != null">
+        #{ri2,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ri3 != null">
+        #{ri3,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itclj.model.User">
+    update tuser
+    <set>
+      <if test="uname != null">
+        uName = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="upassword != null">
+        uPassword = #{upassword,jdbcType=VARCHAR},
+      </if>
+      <if test="upersoname != null">
+        uPersoname = #{upersoname,jdbcType=VARCHAR},
+      </if>
+      <if test="unum != null">
+        uNum = #{unum,jdbcType=VARCHAR},
+      </if>
+      <if test="urole != null">
+        uRole = #{urole,jdbcType=CHAR},
+      </if>
+      <if test="uisdel != null">
+        uIsDel = #{uisdel,jdbcType=CHAR},
+      </if>
+      <if test="uctime != null">
+        uCTime = #{uctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uisadmin != null">
+        uIsAdmin = #{uisadmin,jdbcType=VARCHAR},
+      </if>
+      <if test="ri != null">
+        ri = #{ri,jdbcType=DATE},
+      </if>
+      <if test="ri2 != null">
+        ri2 = #{ri2,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ri3 != null">
+        ri3 = #{ri3,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uId = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itclj.model.User">
+    update tuser
+    set uName = #{uname,jdbcType=VARCHAR},
+      uPassword = #{upassword,jdbcType=VARCHAR},
+      uPersoname = #{upersoname,jdbcType=VARCHAR},
+      uNum = #{unum,jdbcType=VARCHAR},
+      uRole = #{urole,jdbcType=CHAR},
+      uIsDel = #{uisdel,jdbcType=CHAR},
+      uCTime = #{uctime,jdbcType=TIMESTAMP},
+      uIsAdmin = #{uisadmin,jdbcType=VARCHAR},
+      ri = #{ri,jdbcType=DATE},
+      ri2 = #{ri2,jdbcType=TIMESTAMP},
+      ri3 = #{ri3,jdbcType=TIMESTAMP}
+    where uId = #{uid,jdbcType=INTEGER}
+  </update>
+</mapper>
