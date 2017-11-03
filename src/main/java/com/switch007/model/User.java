@@ -1,4 +1,4 @@
-package com.itclj.model;
+package com.switch007.model;
 
 import java.util.Date;
 

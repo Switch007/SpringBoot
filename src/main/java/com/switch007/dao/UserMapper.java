@@ -1,7 +1,13 @@
-package com.itclj.dao;
+package com.switch007.dao;
 
-import com.itclj.model.User;
+import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
+import com.switch007.model.User;
+
+@Mapper
 public interface UserMapper {
     int deleteByPrimaryKey(Integer uid);
 
@@ -14,4 +20,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+    
+    List<User> selectByMap(Map<String, Object> mp);
 }
