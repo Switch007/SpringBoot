@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.switch007.dao.AdminerMapper">
+	<resultMap id="BaseResultMap" type="com.switch007.model.Adminer">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="account" jdbcType="VARCHAR" property="account" />
+		<result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+		<result column="password" jdbcType="VARCHAR" property="password" />
+		<result column="role" jdbcType="INTEGER" property="role" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="is_del" jdbcType="INTEGER" property="isDel" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+		<result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
+		<result column="cover_img" jdbcType="VARCHAR" property="coverImg" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, account,nick_name, password, role, status, is_del, create_time,
+		last_login_time, last_login_ip,
+		cover_img
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_adminer
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_adminer
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.switch007.model.Adminer">
+		insert into t_adminer (id,account, nick_name, password,
+		role, status, is_del,
+		create_time, last_login_time, last_login_ip,
+		cover_img)
+		values (#{id,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR},
+		#{nickName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+		#{role,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+		#{isDel,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR},
+		#{coverImg,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.switch007.model.Adminer">
+		insert into t_adminer
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="account != null">
+				account,
+			</if>
+			<if test="nickName != null">
+				nick_name,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="role != null">
+				role,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="isDel != null">
+				is_del,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastLoginTime != null">
+				last_login_time,
+			</if>
+			<if test="lastLoginIp != null">
+				last_login_ip,
+			</if>
+			<if test="coverImg != null">
+				cover_img,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="account != null">
+				#{account,jdbcType=VARCHAR},
+			</if>
+			<if test="nickName != null">
+				#{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="role != null">
+				#{role,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="isDel != null">
+				#{isDel,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastLoginTime != null">
+				#{lastLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastLoginIp != null">
+				#{lastLoginIp,jdbcType=VARCHAR},
+			</if>
+			<if test="coverImg != null">
+				#{coverImg,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.switch007.model.Adminer">
+		update t_adminer
+		<set>
+			<if test="account != null">
+				account = #{account,jdbcType=VARCHAR},
+			</if>
+			<if test="nickName != null">
+				nick_name = #{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="role != null">
+				role = #{role,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="isDel != null">
+				is_del = #{isDel,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastLoginTime != null">
+				last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastLoginIp != null">
+				last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+			</if>
+			<if test="coverImg != null">
+				cover_img = #{coverImg,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.switch007.model.Adminer">
+		update t_adminer
+		set account = #{account,jdbcType=VARCHAR},
+		nick_name = #{nickName,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		role = #{role,jdbcType=INTEGER},
+		status = #{status,jdbcType=INTEGER},
+		is_del = #{isDel,jdbcType=INTEGER},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+		last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+		cover_img = #{coverImg,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="selectByFileds" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_adminer
+		<where>
+			<if test="account != null">
+				and account=#{account}
+			</if>
+			<if test="password != null">
+				and password=#{password}
+			</if>
+		</where>
+	</select>
+</mapper>

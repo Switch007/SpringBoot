@@ -13,6 +13,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,12 +38,21 @@ public class UserInfoController {
 	private UserService userService;
 	@Autowired
 	Configuration config;
+	@Autowired
+	private StringRedisTemplate stringRedisTemplate;// 处理字符
+
+	@Autowired
+	private RedisTemplate redisTemplate;// 处理对象
 
 	@RequestMapping("/getInfo")
 	@ResponseBody
 	public User findById(HttpServletRequest request) {
 		String id = request.getParameter("id");
 		User u = StringUtils.isNullOrEmpty(id) ? null : userService.selectById(Integer.parseInt(id));
+		Object s = redisTemplate.opsForValue().get("userId_" + id);
+		if (null == s) {
+			redisTemplate.opsForValue().set("userId_" + id, u);
+		}
 		return u;
 	}
 

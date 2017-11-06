@@ -27,7 +27,7 @@
 
     <javaClientGenerator targetPackage="com.switch007.dao" targetProject="sp/src/main/java" type="XMLMAPPER"/>
 
-    <table  schema="User" tableName="tuser" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+    <table  schema="Adminer" tableName="t_adminer" domainObjectName="Adminer" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false" ></table>
 
   </context>
