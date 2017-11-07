@@ -26,7 +26,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	public List<User> pagelist(Map<String, Object> params) {
-		return userMapper.selectByMap(params);
+		List<User> re=userMapper.selectByMap(params);
+		return re;
 	}
 
 	public User selectById(int id) {

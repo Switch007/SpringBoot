@@ -1,11 +1,5 @@
 package com.switch007.controller.web;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,18 +20,12 @@ import com.mysql.jdbc.StringUtils;
 import com.switch007.model.User;
 import com.switch007.service.UserService;
 
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateExceptionHandler;
-
 @Controller
 @RequestMapping("/user")
 public class UserInfoController {
 
 	@Autowired
 	private UserService userService;
-	@Autowired
-	Configuration config;
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;// 处理字符
 
@@ -62,31 +50,6 @@ public class UserInfoController {
 
 	}
 
-	@RequestMapping("/hello")
-	public String hello(Map<String, Object> map, HttpServletRequest request) {
-		map.put("name", "[Angel -- 守护天使]");
-		List<String> names = new ArrayList<String>();
-		names.add("wang");
-		names.add("ni");
-		names.add("ma");
-		map.put("list", names);
-		map.put("testtime", new Date());
-		String filepath=request.getServletContext().getRealPath("/")+"hello.html";
-		File htmlFile = new File(filepath);
-		if (!htmlFile.exists()) {
-			config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-			Writer out = null;
-			try {
-				Template temple = config.getTemplate("hello.ftl");// 获取模板
-				out = new OutputStreamWriter(new FileOutputStream(filepath),"utf-8");// 生成最终页面并写到文件
-				temple.process(map, out);// 处理
-				out.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return "hello";
-	}
 
 	@RequestMapping({ "/userList" })
 	@ResponseBody

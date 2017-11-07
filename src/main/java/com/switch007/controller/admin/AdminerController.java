@@ -1,9 +1,5 @@
 package com.switch007.controller.admin;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -19,13 +15,14 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mysql.jdbc.StringUtils;
-import com.sun.net.httpserver.HttpContext;
 import com.switch007.model.Adminer;
 import com.switch007.model.LoginModel;
 import com.switch007.model.ResultModel;
@@ -34,9 +31,6 @@ import com.switch007.service.AdminerService;
 import com.switch007.service.UserService;
 import com.switch007.util.Md5Util;
 
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateExceptionHandler;
 
 @Controller
 @RequestMapping("/admin/user")
@@ -52,16 +46,18 @@ public class AdminerController {
 	private RedisTemplate redisTemplate;// 处理对象
 
 	@Autowired
-	Configuration config;
-	@Autowired
 	private AdminerService adminerService;
 	
+	@RequestMapping(value="/loginPage")
+	public String loginPage(HttpServletRequest request) {
+		return "/admin/login";
+	}
 	
-	@RequestMapping("/login")
+	
+	
+	@RequestMapping(value="/login",method=RequestMethod.POST)
 	@ResponseBody
 	public ResultModel login(LoginModel lm,HttpServletRequest request) {
-		lm.setAccount("13047083645");
-		lm.setPassword("123456");
 		if(StringUtils.isNullOrEmpty(lm.getAccount())||StringUtils.isNullOrEmpty(lm.getPassword())){
 			return ResultModel.fail("-1", "请求参数为空");
 		}
@@ -79,13 +75,27 @@ public class AdminerController {
 		
 	}
 	
+	
+	@RequestMapping("/getUserList")
+	public ModelAndView getUserList(PageInfo<User> pageinfo,HttpServletRequest request){
+		ModelAndView mv=new ModelAndView("/admin/user_list");
+		Map<String, Object> mp=new HashMap<String, Object>();
+		Page<User> page= PageHelper.startPage(3, 2, "uCTime");
+		List<User> users=	userService.pagelist(mp);
+		pageinfo.setList(users);
+		pageinfo.setTotal(page.getTotal());
+		pageinfo.setPages(page.getPages());
+		mv.addObject("pageinfo", pageinfo);
+		return mv;
+	}
+	
 
-	@RequestMapping("/toList")
+/*	@RequestMapping("/toList")//freemarker
 	public String toList(Map<String, Object> map, HttpServletRequest request) {
-		/*
+		
 		 * User s = (User) redisTemplate.opsForValue().get("userId_" + 1);
 		 * System.out.println(s.getUname());
-		 */
+		 
 		String filepath = request.getServletContext().getRealPath("/") + "WEB-INF/admin/" + "user_list.html";
 		File htmlFile = new File(filepath);
 		if (!htmlFile.exists()) {
@@ -102,7 +112,7 @@ public class AdminerController {
 		}
 		return "/admin/user_list";
 
-	}
+	}*/
 
 	@RequestMapping({ "/userList" })
 	@ResponseBody

@@ -19,11 +19,12 @@ public class AdminInterceptor implements HandlerInterceptor {
 	}
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse respone, Object handle) throws Exception {
-		boolean result = true;
+		boolean result = false;
 		Object ob = request.getSession().getAttribute("admin");
+		System.out.println(request.getRequestURI());
 		if (null == ob) {
 			//result = false;// 只有返回true才会继续向下执行，返回false取消当前请求
-			respone.sendRedirect("/hello.html");
+			respone.sendRedirect("/admin/user/loginPage");
 		} else {
 			result = true;
 		}
