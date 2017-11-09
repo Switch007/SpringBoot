@@ -36,7 +36,7 @@ public class UserInfoController {
 	@ResponseBody
 	public User findById(HttpServletRequest request) {
 		String id = request.getParameter("id");
-		User u = StringUtils.isNullOrEmpty(id) ? null : userService.selectById(Integer.parseInt(id));
+		User u = StringUtils.isNullOrEmpty(id) ? null : userService.selectById(id);
 		Object s = redisTemplate.opsForValue().get("userId_" + id);
 		if (null == s) {
 			redisTemplate.opsForValue().set("userId_" + id, u);

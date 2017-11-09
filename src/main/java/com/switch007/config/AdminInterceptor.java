@@ -19,7 +19,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 	}
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse respone, Object handle) throws Exception {
-		boolean result = false;
+		/*boolean result = false;
 		Object ob = request.getSession().getAttribute("admin");
 		System.out.println(request.getRequestURI());
 		if (null == ob) {
@@ -28,7 +28,8 @@ public class AdminInterceptor implements HandlerInterceptor {
 		} else {
 			result = true;
 		}
-		return result;
+		return result;*/
+		return true;
 	}
 
 }

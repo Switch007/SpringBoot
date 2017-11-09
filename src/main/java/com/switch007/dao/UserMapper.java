@@ -9,17 +9,17 @@ import com.switch007.model.User;
 
 @Mapper
 public interface UserMapper {
-    int deleteByPrimaryKey(Integer uid);
+	int deleteByPrimaryKey(String id);
 
-    int insert(User record);
+	int insert(User record);
 
-    int insertSelective(User record);
+	int insertSelective(User record);
 
-    User selectByPrimaryKey(Integer uid);
+	User selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(User record);
+	int updateByPrimaryKeySelective(User record);
 
-    int updateByPrimaryKey(User record);
-    
-    List<User> selectByMap(Map<String, Object> mp);
+	int updateByPrimaryKey(User record);
+
+	List<User> selectByMap(Map<String, Object> params);
 }

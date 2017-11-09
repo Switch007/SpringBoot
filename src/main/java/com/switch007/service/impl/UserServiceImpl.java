@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService{
 		return re;
 	}
 
-	public User selectById(int id) {
+	public User selectById(String id) {
 		return userMapper.selectByPrimaryKey(id);
 	}
 

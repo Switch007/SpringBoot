@@ -2,6 +2,7 @@ package com.switch007.controller.admin;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +28,10 @@ import com.switch007.model.Adminer;
 import com.switch007.model.LoginModel;
 import com.switch007.model.ResultModel;
 import com.switch007.model.User;
+import com.switch007.model.UserModel;
 import com.switch007.service.AdminerService;
 import com.switch007.service.UserService;
 import com.switch007.util.Md5Util;
-
 
 @Controller
 @RequestMapping("/admin/user")
@@ -47,94 +48,68 @@ public class AdminerController {
 
 	@Autowired
 	private AdminerService adminerService;
-	
-	@RequestMapping(value="/loginPage")
+
+	@RequestMapping(value = "/loginPage")
 	public String loginPage(HttpServletRequest request) {
 		return "/admin/login";
 	}
-	
-	
-	
-	@RequestMapping(value="/login",method=RequestMethod.POST)
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultModel login(LoginModel lm,HttpServletRequest request) {
-		if(StringUtils.isNullOrEmpty(lm.getAccount())||StringUtils.isNullOrEmpty(lm.getPassword())){
+	public ResultModel login(LoginModel lm, HttpServletRequest request) {
+		if (StringUtils.isNullOrEmpty(lm.getAccount()) || StringUtils.isNullOrEmpty(lm.getPassword())) {
 			return ResultModel.fail("-1", "请求参数为空");
 		}
-		Map<String,Object> mp=new HashMap<String, Object>();
+		Map<String, Object> mp = new HashMap<String, Object>();
 		mp.put("account", lm.getAccount());
 		mp.put("password", Md5Util.getMd5(lm.getPassword()));
-		Adminer admin= adminerService.login(mp);
-		if(null!=admin){
+		Adminer admin = adminerService.login(mp);
+		if (null != admin) {
 			admin.setPassword("");
 			request.getSession().setAttribute("admin", admin);
 			return ResultModel.success("success", admin);
-		}else{
+		} else {
 			return ResultModel.fail("fail", admin);
 		}
-		
-	}
-	
-	
-	@RequestMapping("/getUserList")
-	public ModelAndView getUserList(PageInfo<User> pageinfo,HttpServletRequest request){
-		ModelAndView mv=new ModelAndView("/admin/user_list");
-		Map<String, Object> mp=new HashMap<String, Object>();
-		Page<User> page= PageHelper.startPage(3, 2, "uCTime");
-		List<User> users=	userService.pagelist(mp);
-		pageinfo.setList(users);
-		pageinfo.setTotal(page.getTotal());
-		pageinfo.setPages(page.getPages());
-		mv.addObject("pageinfo", pageinfo);
-		return mv;
-	}
-	
 
-/*	@RequestMapping("/toList")//freemarker
-	public String toList(Map<String, Object> map, HttpServletRequest request) {
-		
-		 * User s = (User) redisTemplate.opsForValue().get("userId_" + 1);
-		 * System.out.println(s.getUname());
-		 
-		String filepath = request.getServletContext().getRealPath("/") + "WEB-INF/admin/" + "user_list.html";
-		File htmlFile = new File(filepath);
-		if (!htmlFile.exists()) {
-			config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-			Writer out = null;
-			try {
-				Template temple = config.getTemplate("user_list.ftl");// 获取模板
-				out = new OutputStreamWriter(new FileOutputStream(filepath), "utf-8");// 生成最终页面并写到文件
-				temple.process(map, out);// 处理
-				out.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+	}
+
+	@RequestMapping("/userListPage")
+	public String userListPage(HttpServletRequest request) {
 		return "/admin/user_list";
-
-	}*/
-
-	@RequestMapping({ "/userList" })
-	@ResponseBody
-	public PageInfo<User> userList(HttpServletRequest request, PageInfo<User> pageinfo) {
-		String message_type = request.getParameter("message_type");
-		String keyword = request.getParameter("keyword");
-		Map<String, Object> params = new HashMap();
-		if (!StringUtils.isNullOrEmpty(message_type)) {
-			params.put("messageType", Integer.valueOf(Integer.parseInt(message_type)));
-		}
-		if (!StringUtils.isNullOrEmpty(keyword)) {
-			params.put("keyword", keyword.trim());
-		}
-		Page<User> page = PageHelper.startPage(pageinfo.getPageNum(), pageinfo.getPageSize());
-		List<User> list = userService.pagelist(params);
-		pageinfo.setList(list);
-		pageinfo.setTotal(page.getTotal());
-		pageinfo.setPages(page.getPages());
-		return pageinfo;
 	}
 
+	@RequestMapping("/getUsersData")
+	@ResponseBody
+	public PageInfo<User> getUsersData(PageInfo<User> pageinfo, HttpServletRequest request) {
+		Map<String, Object> mp = new HashMap<String, Object>();
+		PageHelper.startPage(pageinfo.getPageNum(), pageinfo.getPageSize());
+		String keyWord = request.getParameter("keyWord");
+		mp.put("keyWord", keyWord);
+		List<User> users = userService.pagelist(mp);
+		PageInfo<User> p = new PageInfo<User>(users);
+		return p;
+	}
 
+	/*
+	 * @RequestMapping("/toList")//freemarker public String toList(Map<String,
+	 * Object> map, HttpServletRequest request) {
+	 * 
+	 * User s = (User) redisTemplate.opsForValue().get("userId_" + 1);
+	 * System.out.println(s.getUname());
+	 * 
+	 * String filepath = request.getServletContext().getRealPath("/") +
+	 * "WEB-INF/admin/" + "user_list.html"; File htmlFile = new File(filepath);
+	 * if (!htmlFile.exists()) {
+	 * config.setTemplateExceptionHandler(TemplateExceptionHandler
+	 * .RETHROW_HANDLER); Writer out = null; try { Template temple =
+	 * config.getTemplate("user_list.ftl");// 获取模板 out = new
+	 * OutputStreamWriter(new FileOutputStream(filepath), "utf-8");//
+	 * 生成最终页面并写到文件 temple.process(map, out);// 处理 out.close(); } catch
+	 * (Exception e) { e.printStackTrace(); } } return "/admin/user_list";
+	 * 
+	 * }
+	 */
 
 	public static void main(String[] ss) {
 		String uri = "https://uic.youzan.com/sso/open/initToken";
@@ -159,7 +134,7 @@ public class AdminerController {
 				if (i < 0) {
 					i += 256;
 				}
-				if (i < 16){
+				if (i < 16) {
 					md5Code.append("0");
 				}
 				md5Code.append(Integer.toHexString(i));

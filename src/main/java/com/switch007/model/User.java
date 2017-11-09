@@ -3,123 +3,123 @@ package com.switch007.model;
 import java.util.Date;
 
 public class User {
-    private Integer uid;
+    private String id;
 
-    private String uname;
+    private String username;
 
-    private String upassword;
+    private String password;
 
-    private String upersoname;
+    private Integer status;
 
-    private String unum;
+    private String lastLoginIp;
 
-    private String urole;
+    private String coverImg;
 
-    private String uisdel;
+    private String address;
 
-    private Date uctime;
+    private String phone;
 
-    private String uisadmin;
+    private Date lastSendMailTime;
 
-    private Date ri;
+    private Date forbidTime;
 
-    private Date ri2;
+    private Date createDate;
 
-    private Date ri3;
+    private Date modifyDate;
 
-    public Integer getUid() {
-        return uid;
+    public String getId() {
+        return id;
     }
 
-    public void setUid(Integer uid) {
-        this.uid = uid;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getUname() {
-        return uname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUname(String uname) {
-        this.uname = uname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUpassword() {
-        return upassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUpassword(String upassword) {
-        this.upassword = upassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getUpersoname() {
-        return upersoname;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setUpersoname(String upersoname) {
-        this.upersoname = upersoname;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public String getUnum() {
-        return unum;
+    public String getLastLoginIp() {
+        return lastLoginIp;
     }
 
-    public void setUnum(String unum) {
-        this.unum = unum;
+    public void setLastLoginIp(String lastLoginIp) {
+        this.lastLoginIp = lastLoginIp;
     }
 
-    public String getUrole() {
-        return urole;
+    public String getCoverImg() {
+        return coverImg;
     }
 
-    public void setUrole(String urole) {
-        this.urole = urole;
+    public void setCoverImg(String coverImg) {
+        this.coverImg = coverImg;
     }
 
-    public String getUisdel() {
-        return uisdel;
+    public String getAddress() {
+        return address;
     }
 
-    public void setUisdel(String uisdel) {
-        this.uisdel = uisdel;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public Date getUctime() {
-        return uctime;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUctime(Date uctime) {
-        this.uctime = uctime;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getUisadmin() {
-        return uisadmin;
+    public Date getLastSendMailTime() {
+        return lastSendMailTime;
     }
 
-    public void setUisadmin(String uisadmin) {
-        this.uisadmin = uisadmin;
+    public void setLastSendMailTime(Date lastSendMailTime) {
+        this.lastSendMailTime = lastSendMailTime;
     }
 
-    public Date getRi() {
-        return ri;
+    public Date getForbidTime() {
+        return forbidTime;
     }
 
-    public void setRi(Date ri) {
-        this.ri = ri;
+    public void setForbidTime(Date forbidTime) {
+        this.forbidTime = forbidTime;
     }
 
-    public Date getRi2() {
-        return ri2;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setRi2(Date ri2) {
-        this.ri2 = ri2;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
-    public Date getRi3() {
-        return ri3;
+    public Date getModifyDate() {
+        return modifyDate;
     }
 
-    public void setRi3(Date ri3) {
-        this.ri3 = ri3;
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
     }
 }
