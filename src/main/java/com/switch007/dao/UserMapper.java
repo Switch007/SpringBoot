@@ -22,4 +22,6 @@ public interface UserMapper {
 	int updateByPrimaryKey(User record);
 
 	List<User> selectByMap(Map<String, Object> params);
+
+	User selectByFiled(Map<String, Object> params);
 }

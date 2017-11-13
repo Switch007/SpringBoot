@@ -26,6 +26,10 @@ public class UserModel {
 
 	private Date modifyDate;
 
+	public UserModel(){
+		super();
+	}
+	
 	public UserModel(User user) {
 		this.id = user.getId();
 		this.username = user.getUsername();

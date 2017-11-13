@@ -180,9 +180,23 @@
 		modify_date = #{modifyDate,jdbcType=TIMESTAMP}
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
-	<select id="selectByMap" parameterType="map" resultMap="BaseResultMap">
+	<select id="selectByMap" parameterType="map" resultType="com.switch007.model.User">
 		select
 		<include refid="Base_Column_List" />
 		from t_user_info
 	</select>
+	
+	
+	<select id="selectByFiled" parameterType="map" resultType="com.switch007.model.User" statementType="STATEMENT">
+	select 
+	<include refid="Base_Column_List" /> 
+	from t_user_info
+	<where>
+		<if test="filed != null">
+		    ${filed}=${value}
+		</if>
+	</where>
+	
+	</select>
+	
 </mapper>

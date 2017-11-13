@@ -1,8 +1,6 @@
 package com.switch007.controller.web;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,12 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.mysql.jdbc.StringUtils;
+import com.switch007.model.ResultModel;
 import com.switch007.model.User;
+import com.switch007.model.UserModel;
 import com.switch007.service.UserService;
+import com.switch007.util.Md5Util;
+import com.switch007.util.UUIDUtils;
 
 @Controller
 @RequestMapping("/user")
@@ -32,43 +31,39 @@ public class UserInfoController {
 	@Autowired
 	private RedisTemplate redisTemplate;// 处理对象
 
-	@RequestMapping("/getInfo")
+	@RequestMapping("/getUserInfo")
 	@ResponseBody
-	public User findById(HttpServletRequest request) {
+	public ResultModel findById(HttpServletRequest request) {
 		String id = request.getParameter("id");
-		User u = StringUtils.isNullOrEmpty(id) ? null : userService.selectById(id);
-		Object s = redisTemplate.opsForValue().get("userId_" + id);
-		if (null == s) {
-			redisTemplate.opsForValue().set("userId_" + id, u);
+		Object ouser = redisTemplate.opsForValue().get("userId_" + id);
+		User user = (null != ouser ? (User) ouser : null);
+		// 如果redis中不存该条信息
+		if (null == ouser) {
+			user = userService.selectById(id);
+			if (null != user) {// 如果存在于数据库并且不存在与redis则更新redis
+				redisTemplate.opsForValue().set("user_" + user.getId(), user);
+			}
 		}
-		return u;
+		return (null == user ? ResultModel.fail("id不存在", id) : ResultModel.success("success", new UserModel(user)));
 	}
 
-	@RequestMapping("/toList")
-	public String toList(HttpServletRequest request) {
-		return "/";
-
-	}
-
-
-	@RequestMapping({ "/userList" })
+	@RequestMapping("/save")
 	@ResponseBody
-	public PageInfo<User> userList(HttpServletRequest request, PageInfo<User> pageinfo) {
-		String message_type = request.getParameter("message_type");
-		String keyword = request.getParameter("keyword");
-		Map<String, Object> params = new HashMap();
-		if (!StringUtils.isNullOrEmpty(message_type)) {
-			params.put("messageType", Integer.valueOf(Integer.parseInt(message_type)));
+	public ResultModel save(User user, HttpServletRequest request) {
+		user.setUsername("wang");
+		user.setPhone("13047083645");
+		user.setPassword(Md5Util.getMd5("123456"));
+		String uuid = UUIDUtils.get32UUID();
+		user.setId(uuid);
+		user.setLastLoginIp(request.getRemoteHost());
+		User u = userService.selectByFiled("phone", user.getPhone());
+		if (null == u) {
+			userService.save(user);
+			redisTemplate.opsForValue().set("user_" + uuid, user);
+			return ResultModel.success("success", u);
+		} else {
+			return ResultModel.fail("该帐号已被注册", u.getId());
 		}
-		if (!StringUtils.isNullOrEmpty(keyword)) {
-			params.put("keyword", keyword.trim());
-		}
-		Page<User> page = PageHelper.startPage(pageinfo.getPageNum(), pageinfo.getPageSize());
-		List<User> list = userService.pagelist(params);
-		pageinfo.setList(list);
-		pageinfo.setTotal(page.getTotal());
-		pageinfo.setPages(page.getPages());
-		return pageinfo;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.switch007.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,13 @@ public class UserServiceImpl implements UserService{
 
 	public User selectById(String id) {
 		return userMapper.selectByPrimaryKey(id);
+	}
+
+	public User selectByFiled(String filed, String value) {
+		Map<String, Object> mp=new HashMap<String, Object>();
+		mp.put("filed", filed);
+		mp.put("value", value);
+		return userMapper.selectByFiled(mp);
 	}
 
 }
