@@ -23,6 +23,7 @@ public class WebInterceptor extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("/web/index");
 		registry.addViewController("/error").setViewName("/error");  
 	}
 	

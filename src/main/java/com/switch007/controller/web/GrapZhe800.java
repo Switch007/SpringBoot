@@ -27,7 +27,7 @@ public class GrapZhe800 {
 	public static void grap() {
 		CloseableHttpClient chc = HttpClients.createDefault();
 		HttpGet hg = null;
-		for (int i = 1; i <= 4; i++) {
+		for (int i = 1; i <= 1; i++) {
 			hg = new HttpGet("http://www.youpingou.com/index/cate/sort/ershi/p/" + i + "");
 			try {
 				CloseableHttpResponse response1 = chc.execute(hg);

@@ -25,36 +25,45 @@ public class ProductController {
 	private ProductService productService;
 	@Autowired
 	private RedisTemplate redisTemplate;
+
 	@RequestMapping("/batchSave")
 	public String batchSave() {
-		List<Product> products= GrapZhe800.dealHtml();
+		List<Product> products = GrapZhe800.dealHtml();
+		//确保redis中是最新的最热数据
+		redisTemplate.delete("newProducts");
+		
 		productService.batchSave(products);
 		return "product";
 	}
-	
+
 	@RequestMapping("/list")
 	@ResponseBody
-	public List<Product> list(HttpServletRequest request){
-		Map<String, Object> mp=new HashMap<String, Object>();
+	public List<Product> list(HttpServletRequest request) {
+		Map<String, Object> mp = new HashMap<String, Object>();
 		PageHelper.startPage(1, 10);
-		List<Product> product_list=productService.list(mp);
-		Page<Product> p=(Page<Product>) product_list;
+		List<Product> product_list = productService.list(mp);
+		Page<Product> p = (Page<Product>) product_list;
 		return product_list;
 	}
-	
+
 	/**
-	 * 取出最热的缓存数据
+	 * 取出最新的缓存数据
+	 * 
 	 * @return
 	 */
-	/*@RequestMapping("/hots")
-	public List<Product> getHot(){
-		productService.
-		redisTemplate.opsForList().rightPush("hot_product", arg1, arg2)
-		
-		return null;
-		
-	}*/
-	
-	
+	@RequestMapping("/hots")
+	@ResponseBody
+	public List<Product> getHot() {
+		List<Product> hotProducts = redisTemplate.opsForList().range("newProducts", 0, 10);
+		if (hotProducts.size() <= 0) {
+			Map<String, Object> mp = new HashMap<String, Object>();
+			PageHelper.startPage(1, 10);
+			hotProducts = productService.list(mp);
+			redisTemplate.opsForList().leftPush("newProducts", hotProducts);
+		}
+
+		return hotProducts;
+
+	}
 
 }
