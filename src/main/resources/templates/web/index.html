@@ -1,40 +1,33 @@
 ﻿<!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
 <meta http-equiv="x-ua-compatible" content="ie=edge"/>
 <title>Home</title>
 <meta name="description" content=""/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<!-- Place favicon.ico in the root directory -->
-<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico"/>
 <!-- all css here -->
 <!-- bootstrap v3.3.6 css -->
-<link rel="stylesheet" href="css/bootstrap.min.css"/>
+<link rel="stylesheet" th:href="@{/css/web/bootstrap.min.css}"/>
 <!-- animate css -->
-<link rel="stylesheet" href="css/animate.css"/>
+<link rel="stylesheet" th:href="@{/css/web/animate.css}"/>
 <!-- jquery-ui.min css -->
-<link rel="stylesheet" href="css/jquery-ui.min.css"/>
+<link rel="stylesheet" th:href="@{/css/web/jquery-ui.min.css}"/>
 <!-- meanmenu css -->
-<link rel="stylesheet" href="css/meanmenu.min.css"/>
+<link rel="stylesheet" th:href="@{/css/web/meanmenu.min.css}"/>
 <!-- RS slider css -->
-<link rel="stylesheet" type="text/css" href="lib/rs-plugin/css/settings.css" media="screen" />
+<link rel="stylesheet" type="text/css" th:href="@{/js/rs-plugin/css/settings.css}" media="screen" />
 <!-- owl.carousel css -->
-<link rel="stylesheet" href="css/owl.carousel.css"/>
+<link rel="stylesheet" th:href="@{/css/web/owl.carousel.css}"/>
 <!-- font-awesome css -->
-<link rel="stylesheet" href="css/font-awesome.min.css"/>
+<link rel="stylesheet" th:href="@{css/web/font-awesome.min.css}"/>
 <!-- style css -->
-<link rel="stylesheet" href="css/style.css"/>
+<link rel="stylesheet" th:href="@{/css/web/style.css}"/>
 <!-- responsive css -->
-<link rel="stylesheet" href="css/responsive.css"/>
-<!-- modernizr css -->
-<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+<link rel="stylesheet" th:href="@{/css/web/responsive.css}"/>
 </head>
 <body>
-<!--[if lt IE 8]>
-		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-	<![endif]-->
-<!-- Add your site or application content here -->
 <!-- header-top-area start -->
 <div class="header-top-area hidden-xs">
 	<div class="container">
@@ -76,7 +69,7 @@
 				<div class="row">
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 						<div class="logo">
-							<a href="index.html"><img src="img/logo/logo.png" alt="" /></a>
+							<a href="index.html"><img th:src="@{img/logo/logo.png}" alt="" /></a>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-5 col-sm-5 col-xs-6 hidden-xs">
@@ -1607,25 +1600,25 @@
 <!-- footer end -->
 <!-- all js here -->
 <!-- jquery latest version -->
-<script src="js/vendor/jquery-1.12.0.min.js"></script>
+<script th:src="@{/js/jquery-3.1.0.min.js}"></script>
 <!-- bootstrap js -->
-<script src="js/bootstrap.min.js"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
 <!-- owl.carousel js -->
-<script src="js/owl.carousel.min.js"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
 <!-- jquery-ui js -->
-<script src="js/jquery-ui.min.js"></script>
+<script th:src="@{/js/jquery-ui.min.js}"></script>
 <!-- RS-Plugin JS -->
-<script type="text/javascript" src="lib/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-<script type="text/javascript" src="lib/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
-<script src="lib/rs-plugin/rs.home.js"></script>
+<script type="text/javascript" th:src="@{/js/rs-plugin/js/jquery.themepunch.tools.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/rs-plugin/js/jquery.themepunch.revolution.min.js}"></script>
+<script th:src="@{js/rs-plugin/rs.home.js}"></script>
 <!-- meanmenu js -->
-<script src="js/jquery.meanmenu.js"></script>
+<script th:src="@{/js/jquery.meanmenu.js}"></script>
 <!-- wow js -->
-<script src="js/wow.min.js"></script>
+<script th:src="@{/js/wow.min.js}"></script>
 <!-- plugins js -->
-<script src="js/plugins.js"></script>
+<script th:src="@{/js/plugins.js}"></script>
 <!-- main js -->
-<script src="js/main.js"></script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 <!-- Mirrored from themepure.net/tf/tp-shop-preview/tp-shop/index.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 13 Apr 2016 11:24:56 GMT -->
 </html>
