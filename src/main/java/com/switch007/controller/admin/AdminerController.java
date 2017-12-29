@@ -76,6 +76,8 @@ public class AdminerController {
 
 	@RequestMapping("/userListPage")
 	public String userListPage(HttpServletRequest request) {
+		User t=null;
+		t.getAddress();
 		return "/admin/user_list";
 	}
 
